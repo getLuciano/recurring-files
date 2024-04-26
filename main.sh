@@ -169,7 +169,6 @@ substituir_dados_cliente() {
 }
 
 substituir_dados_cliente cliente1
-
 substituir_dados_cliente cliente2
 
 #clear
