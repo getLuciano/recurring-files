@@ -169,5 +169,5 @@ substituir_dados_cliente cliente1
 
 substituir_dados_cliente cliente2
 
-#clear
+clear
 printf "Programa finalizado! \nSaiba mais sobre no history.log\n"
