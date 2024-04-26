@@ -122,7 +122,7 @@ substituir_dados_cliente() {
         temp_dir=$(mktemp -d)
 
         # Extrai o conteúdo do arquivo .odt para o diretório temporário
-        unzip -q "$arquivo_modelo_odt" -d "$temp_dir" >> "$arquivo_mes_atual/$arquivo_log"
+        unzip -q "$arquivo_modelo_odt" -d "$temp_dir" #>> "$arquivo_mes_atual/$arquivo_log"
 
         for chave in "${!dados_cliente[@]}"; do
             local valor="${dados_cliente[$chave]}"
@@ -133,13 +133,13 @@ substituir_dados_cliente() {
 
         # Recria o arquivo .odt com o diretório temporário modificado
         arquivo_saida_odt="${arquivo_mes_atual}/${nome_arquivo}_modificado.odt"
-        cd "$temp_dir" && zip -r "$arquivo_saida_odt" .  >> "$arquivo_mes_atual/$arquivo_log"
+        cd "$temp_dir" && zip -r "$arquivo_saida_odt" .  #>> "$arquivo_mes_atual/$arquivo_log"
 
         #Salva o nome do arquivo_saida_odt apenas para excluir ele após ser usado
         var_temp_name_arquivo="${arquivo_mes_atual}/${nome_arquivo}_modificado.odt"
 
         # Exporta o novo arquivo .odt para um arquivo .pdf
-        soffice --headless --convert-to pdf --outdir "$arquivo_mes_atual" "$arquivo_saida_odt" >> "$arquivo_mes_atual/$arquivo_log"
+        soffice --headless --convert-to pdf --outdir "$arquivo_mes_atual" "$arquivo_saida_odt" #>> "$arquivo_mes_atual/$arquivo_log"
 
         # Nome do arquivo PDF gerado
         arquivo_pdf_gerado="${arquivo_mes_atual}/${nome_arquivo}_modificado.pdf"
@@ -169,5 +169,5 @@ substituir_dados_cliente cliente1
 
 substituir_dados_cliente cliente2
 
-clear
+#clear
 printf "Programa finalizado! \nSaiba mais sobre no history.log\n"
