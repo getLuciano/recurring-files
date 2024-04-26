@@ -52,24 +52,9 @@ nome_arquivo="fantasia-Cobrança-mensal-Vencimento-dia_atual-ano-mes_atual.odt"
 # Verifica se a pasta do diretorio de entrada existe
 arquivo_modelo_odt="$diretorio_entrada/$nome_arquivo"
 if [ ! -e "$arquivo_modelo_odt" ]; then
-    printf "Arquivo Modelo: [%s] criado com sucessso." "$nome_arquivo" 
-    # Cria um arquivo .odt usando o LibreOffice
-    libreoffice --headless --convert-to odt --outdir "$diretorio_entrada" "$nome_arquivo"
-
-    echo "Fantasia: fantasia" > "$arquivo_modelo_odt"
-    echo "Dia de Vencimento:dia_vencimento" >> "$arquivo_modelo_odt"
-    echo "
-    Valor Total R$ valor_mes
-    " >> "$arquivo_modelo_odt"
-    echo "Razão Social: razao_social" >> "$arquivo_modelo_odt"
-    echo "CNPJ: cnpj_cliente" >> "$arquivo_modelo_odt"
-    echo "
-    Endereço: endereco_cliente
-    " >> "$arquivo_modelo_odt"
-    echo "Mês: mes_atual" >> "$arquivo_modelo_odt"
-    echo "Ano: ano" >> "$arquivo_modelo_odt"
-    echo "Dia: dia_atual" >> "$arquivo_modelo_odt"
-
+    printf "Arquivo Modelo: [%s] copiado com sucessso." "$nome_arquivo" 
+    # Copia o arquivo modelo .odt para a pasta arquivos
+    cp .file-model/fantasia-Cobrança-mensal-Vencimento-dia_atual-ano-mes_atual.odt arquivos/
 fi
 
 if [ ! -e "$arquivo_modelo_odt" ]; then
@@ -122,7 +107,7 @@ substituir_dados_cliente() {
         temp_dir=$(mktemp -d)
 
         # Extrai o conteúdo do arquivo .odt para o diretório temporário
-        unzip -q "$arquivo_modelo_odt" -d "$temp_dir" #>> "$arquivo_mes_atual/$arquivo_log"
+        unzip -q "$arquivo_modelo_odt" -d "$temp_dir" >> "$arquivo_mes_atual/$arquivo_log"
 
         for chave in "${!dados_cliente[@]}"; do
             local valor="${dados_cliente[$chave]}"
@@ -133,13 +118,13 @@ substituir_dados_cliente() {
 
         # Recria o arquivo .odt com o diretório temporário modificado
         arquivo_saida_odt="${arquivo_mes_atual}/${nome_arquivo}_modificado.odt"
-        cd "$temp_dir" && zip -r "$arquivo_saida_odt" .  #>> "$arquivo_mes_atual/$arquivo_log"
+        cd "$temp_dir" && zip -r "$arquivo_saida_odt" . >> "$arquivo_mes_atual/$arquivo_log"
 
         #Salva o nome do arquivo_saida_odt apenas para excluir ele após ser usado
         var_temp_name_arquivo="${arquivo_mes_atual}/${nome_arquivo}_modificado.odt"
 
         # Exporta o novo arquivo .odt para um arquivo .pdf
-        soffice --headless --convert-to pdf --outdir "$arquivo_mes_atual" "$arquivo_saida_odt" #>> "$arquivo_mes_atual/$arquivo_log"
+        soffice --headless --convert-to pdf --outdir "$arquivo_mes_atual" "$arquivo_saida_odt" >> "$arquivo_mes_atual/$arquivo_log"
 
         # Nome do arquivo PDF gerado
         arquivo_pdf_gerado="${arquivo_mes_atual}/${nome_arquivo}_modificado.pdf"
