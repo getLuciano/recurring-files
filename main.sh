@@ -122,8 +122,7 @@ substituir_dados_cliente() {
         temp_dir=$(mktemp -d)
 
         # Extrai o conteúdo do arquivo .odt para o diretório temporário
-        unzip -q "$arquivo_modelo_odt" -d "$temp_dir"
-        # >> "$arquivo_mes_atual/$arquivo_log"
+        unzip -q "$arquivo_modelo_odt" -d "$temp_dir" >> "$arquivo_mes_atual/$arquivo_log"
 
         for chave in "${!dados_cliente[@]}"; do
             local valor="${dados_cliente[$chave]}"
