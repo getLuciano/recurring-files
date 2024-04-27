@@ -6,6 +6,17 @@ if ! command -v libreoffice &> /dev/null; then
     sudo apt-get update && sudo apt-get install -y libreoffice
 fi
 
+# Verifica se a entrada já existe no crontab
+if ! crontab -l | grep -q "$(pwd)/main.sh"; then
+    # Adiciona a entrada no crontab para executar o script no primeiro dia de cada mês
+    (crontab -l ; echo "0 0 1 * * $(pwd)/main.sh cronfish") | crontab -
+    echo "Entrada adicionada ao crontab para executar o script no primeiro dia de cada mês."
+fi
+# se executar com [[$1 -eq cronfiss]]!!
+if [[ $1 == "cronfish" ]]; then
+    echo "$(date): Executado automaticamente pelo cron." >> "$(pwd)/log_crontab.txt"
+fi
+
 # Diretório de entrada (contendo arquivos .odt)
 diretorio_entrada=$(pwd)"/arquivos"
 # Verifica se a pasta do diretorio de entrada existe
@@ -95,6 +106,7 @@ declare -A cliente2=(
 
 printf "\nAguarde a conclusão do das edições em todos arquivos\n\n Leia o [ %s ] no diretório de saída dos pdfs\n\n" "$arquivo_log"
 # Loop pelos arquivos .odt no diretório de entrada que altera o mês e gera o arquivo final .pdf
+echo "$(date): Inicio. Substituir Dados de Clientes." >> "$arquivo_mes_atual/$arquivo_log"
 substituir_dados_cliente() {
     local -n dados_cliente=$1
         # Verifica se o arquivo é um arquivo .odt
@@ -149,10 +161,10 @@ substituir_dados_cliente() {
         # Apaga o arquivo .odt cópia do original
         rm "$var_temp_name_arquivo"
 }
-
 substituir_dados_cliente cliente1
 
 substituir_dados_cliente cliente2
 
 #clear
-printf "Programa finalizado! \nSaiba mais sobre no history.log\n"
+printf "Programa finalizado! \nSaiba mais sobre no %s\n" "$arquivo_log"
+echo "$(date): Fim. Substituir Dados de Clientes." >> "$arquivo_mes_atual/$arquivo_log"
