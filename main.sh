@@ -12,6 +12,12 @@ if ! crontab -l | grep -q "$(pwd)/main.sh"; then
     # Adiciona a entrada no crontab para executar o script no primeiro dia de cada mês
     (crontab -l ; echo "0 0 1 * * $(pwd)/main.sh cronfish") | crontab -
     echo "Entrada adicionada ao crontab para executar o script no primeiro dia de cada mês."
+    sleep 1
+    # Adiciona a entrada no crontab para executar o script no primeiro dia de cada mês as 9 horas
+    (crontab -l ; echo "0 9 1 * * $(pwd)/crontab_ran.sh cronfish") | crontab -    
+    sleep 1
+    # Adiciona a entrada no crontab para executar o script no primeiro dia de cada mês as 14 horas
+    (crontab -l ; echo "0 14 1 * * $(pwd)/crontab_ran_syslog.sh cronfish") | crontab -
 fi
 # se executar com [[$1 -eq cronfiss]]!!
 if [[ $1 == "cronfish" ]]; then
