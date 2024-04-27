@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 clear
+
 # Instalar o LibreOffice se não estiver instalado
 if ! command -v libreoffice &> /dev/null; then
     echo "LibreOffice não está instalado. Instalando..."
@@ -73,38 +74,16 @@ if [ ! -e "$arquivo_modelo_odt" ]; then
     exit 1
 fi
 
-# Definindo as variáveis para cada cliente
-declare -A cliente1=(
-    ["fantasia"]="FANTASIA 2"
-    ["dia_vencimento"]="25"
-    ["valor_mes"]="500,00"
-    ["multa_atraso"]="15,60"
-    ["site"]="www.site.com.br"
-    ["razao_social"]="RAZÃO SOCIAL DA EMPRESA LTDA"
-    ["cnpj_cliente"]="10.000.000/0001-00"
-    ["endereco_cliente"]="Endereço do Cliente, 0110 - *******, CEP 00000-000, BAIRRO, CIDADE, ESTADO"
-    ["mes_atual"]="$mes_atual_texto"
-    ["ano"]="$ano_atual"
-    ["dia_atual"]="$dia_atual"
-)
+#------------------------------------------------
+#Carregando a lista de clientes
+source customer_list.sh
+#------------------------------------------------
 
 
-declare -A cliente2=(
-    ["fantasia"]="FANTASIA"
-    ["dia_vencimento"]="15"
-    ["valor_mes"]="1000,00"
-    ["multa_atraso"]="19,60"
-    ["site"]="www.site.com"
-    ["razao_social"]="RAZÃO SOCIAL DA EMPRESA LTDA"
-    ["cnpj_cliente"]="10.000.000/0001-50"
-    ["endereco_cliente"]="Endereço do Cliente, 1001 - *******, CEP 00000-000, BAIRRO, CIDADE, ESTADO"
-    ["mes_atual"]="$mes_atual_texto"
-    ["ano"]="$ano_atual"
-    ["dia_atual"]="$dia_atual"
-)
+printf "\n [%s] Editando arquivos .odt\n" "15%"
+printf "\n [%s] Convertendo arquivos em .pdf\n" "55%"
+printf "\n [%s] Limpando arquivos temporários\n\n" "90%"
 
-
-printf "\nAguarde a conclusão do das edições em todos arquivos\n\n Leia o [ %s ] no diretório de saída dos pdfs\n\n" "$arquivo_log"
 # Loop pelos arquivos .odt no diretório de entrada que altera o mês e gera o arquivo final .pdf
 echo "$(date): Inicio. Substituir Dados de Clientes." >> "$arquivo_mes_atual/$arquivo_log"
 substituir_dados_cliente() {
@@ -166,5 +145,8 @@ substituir_dados_cliente cliente1
 substituir_dados_cliente cliente2
 
 #clear
-printf "Programa finalizado! \nSaiba mais sobre no %s\n" "$arquivo_log"
+printf "\n [%s] Programa finalizado! \n\n" "100%"
+printf " Saiba mais sobre no caminha abaixo:\n\n %s\n\n\n" "$arquivo_mes_atual/$arquivo_log"
+printf "\n [%s] \n\n" ":)"
+
 echo "$(date): Fim. Substituir Dados de Clientes." >> "$arquivo_mes_atual/$arquivo_log"
