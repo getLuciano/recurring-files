@@ -1,0 +1,4 @@
+sáb 27 abr 2024 14:31:52 -03: Executado automaticamente pelo cron. CRONTAB_RAN_SYSLOG
+sáb 27 abr 2024 14:31:52 -03: CRONTAB-RAN-SYSLOG EXECUTION: A tarefa NÃO foi executada nas últimas 24 horas.
+sáb 27 abr 2024 14:32:01 -03: Executado automaticamente pelo cron. CRONTAB_RAN
+sáb 27 abr 2024 14:32:01 -03: CRONTAB-RAN: O arquivo de log [ log_crontab.txt ] foi atualizado nas últimas 24 horas.
