@@ -29,4 +29,3 @@ declare -A cliente2=(
     ["ano"]="$ano_atual"
     ["dia_atual"]="$dia_atual"
 )
-

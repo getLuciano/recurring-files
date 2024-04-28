@@ -66,7 +66,7 @@ if [ ! -d "$arquivo_mes_atual" ]; then
     mkdir "$arquivo_mes_atual"
 fi
 
-nome_arquivo="fantasia-Cobrança-mensal-Vencimento-dia_atual-ano-mes_atual.odt"
+nome_arquivo="fantasia-Cobrança-mensal-Vencimento-dia_vencimento-ano-mes_atual.odt"
 # Verifica se a pasta do diretorio de entrada existe
 arquivo_modelo_odt="$diretorio_entrada/$nome_arquivo"
 if [ ! -e "$arquivo_modelo_odt" ]; then
@@ -147,7 +147,6 @@ substituir_dados_cliente() {
         rm "$var_temp_name_arquivo"
 }
 substituir_dados_cliente cliente1
-
 substituir_dados_cliente cliente2
 
 #clear
