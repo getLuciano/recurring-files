@@ -1,6 +1,16 @@
 #!/usr/bin/env bash
 clear
 
+# recebe a quantidade de clientes existentes em costumer_list.sh
+count_clientes=$(source count_customers.sh)
+# Verifica se o script count_customers.sh foi executado com sucesso
+if [ $? -eq 1 ]; then
+    echo "Erro ao contar clientes. O arquivo costumer_list.sh pode não existir."
+    echo "inclua dados dos clientes arrays associativos em costumer_lis.sh"
+    exit 1
+fi
+
+
 # Instalar o LibreOffice se não estiver instalado
 if ! command -v libreoffice &> /dev/null; then
     echo "LibreOffice não está instalado. Instalando..."
@@ -86,12 +96,8 @@ source customer_list.sh
 #------------------------------------------------
 
 
-printf "\n [%s] Editando arquivos .odt\n" "15%"
-printf "\n [%s] Convertendo arquivos em .pdf\n" "55%"
-printf "\n [%s] Limpando arquivos temporários\n\n" "90%"
-
 # Loop pelos arquivos .odt no diretório de entrada que altera o mês e gera o arquivo final .pdf
-echo "$(date): Inicio. Substituir Dados de Clientes." >> "$arquivo_mes_atual/$arquivo_log"
+echo " $(date): Inicio. Substituir Dados de Clientes." >> "$arquivo_mes_atual/$arquivo_log"
 substituir_dados_cliente() {
     local -n dados_cliente=$1
         # Verifica se o arquivo é um arquivo .odt
@@ -146,12 +152,23 @@ substituir_dados_cliente() {
         # Apaga o arquivo .odt cópia do original
         rm "$var_temp_name_arquivo"
 }
-substituir_dados_cliente cliente1
-substituir_dados_cliente cliente2
+porcentagem=$(echo 90/$count_clientes | bc)
+valor_porcentagem=8
+printf "\n [%s] Verificação dos dados e arquivos do sistema para inicio do sistema \n" "2.5%"  >> "$arquivo_mes_atual/$arquivo_log"
+printf "\n [%s] aguarde \n" "2.5%"
+for ((i=1; i<=$count_clientes; i++)); do
+    printf "\n [%s] Convertendo arquivos em .pdf\n" "$valor_porcentagem%" >> "$arquivo_mes_atual/$arquivo_log"
+    clear
+    printf "\n [%s] aguarde \n" "$valor_porcentagem%"
+    substituir_dados_cliente cliente$i
+    valor_porcentagem=$(echo "$valor_porcentagem + $porcentagem" | bc)
 
-#clear
+done
+printf "\n [%s] Convertendo arquivos em .pdf\n" "$valor_porcentagem%" >> "$arquivo_mes_atual/$arquivo_log"
+clear
+printf "\n [%s] aguarde \n" "$valor_porcentagem"
+valor_porcentagem=$(echo "$valor_porcentagem + 2" | bc) 
+printf "\n\n [%s] Limpando arquivos temporários\n" "$valor_porcentagem%" >> "$arquivo_mes_atual/$arquivo_log"
+printf "\n $(date): [%s] Programa finalizado! \n\n" "ok." >> "$arquivo_mes_atual/$arquivo_log"
+clear
 printf "\n [%s] Programa finalizado! \n\n" "100%"
-printf " Saiba mais sobre no caminha abaixo:\n\n %s\n\n\n" "$arquivo_mes_atual/$arquivo_log"
-printf "\n [%s] \n\n" ":)"
-
-echo "$(date): Fim. Substituir Dados de Clientes." >> "$arquivo_mes_atual/$arquivo_log"

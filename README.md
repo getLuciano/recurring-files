@@ -10,7 +10,7 @@ Edite o arquivo arquivos/modelo.odt, inserindo sua logo, endereço, dados import
 
 # Instalação 
 Aonde você executar o git-clone será a pasta principal do projeto ""
-~ chmod +x main.sh
+~ chmod +x main.sh count_customers.sh
 
 # Execução
 ~ ./main.sh
