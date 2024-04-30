@@ -5,8 +5,8 @@ if [[ $1 == "cronfish" ]]; then
     echo "$(date): Executado automaticamente pelo cron. CRONTAB_RAN_SYSLOG" >> "$(pwd)/log_crontab.txt"
     # Verifica se a entrada já existe no crontab
     if ! crontab -l | grep -q "$(pwd)/crontab_ran_syslog.sh"; then
-        # Adiciona a entrada no crontab para executar o script no primeiro dia de cada mês as 14 horas
-        (crontab -l ; echo "0 14 1 * * $(pwd)/crontab_ran_syslog.sh cronfish") | crontab -
+        # Adiciona a entrada no crontab para executar o script no 20 dia de cada mês as 14 horas
+        (crontab -l ; echo "0 14 20 * * $(pwd)/crontab_ran_syslog.sh cronfish") | crontab -
     fi
 
     # Verifica se o arquivo de log foi atualizado nas últimas 24 horas

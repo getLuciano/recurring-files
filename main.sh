@@ -19,15 +19,15 @@ fi
 
 # Verifica se a entrada já existe no crontab
 if ! crontab -l | grep -q "$(pwd)/main.sh"; then
-    # Adiciona a entrada no crontab para executar o script no primeiro dia de cada mês
-    (crontab -l ; echo "0 0 1 * * $(pwd)/main.sh cronfish") | crontab -
+    # Adiciona a entrada no crontab para executar o script no 20 dia de cada mês
+    (crontab -l ; echo "0 0 20 * * $(pwd)/main.sh cronfish") | crontab -
     echo "Entrada adicionada ao crontab para executar o script no primeiro dia de cada mês."
     sleep 1
-    # Adiciona a entrada no crontab para executar o script no primeiro dia de cada mês as 9 horas
-    (crontab -l ; echo "0 9 1 * * $(pwd)/crontab_ran.sh cronfish") | crontab -    
+    # Adiciona a entrada no crontab para executar o script no 20 dia de cada mês as 9 horas
+    (crontab -l ; echo "0 9 20 * * $(pwd)/crontab_ran.sh cronfish") | crontab -    
     sleep 1
-    # Adiciona a entrada no crontab para executar o script no primeiro dia de cada mês as 14 horas
-    (crontab -l ; echo "0 14 1 * * $(pwd)/crontab_ran_syslog.sh cronfish") | crontab -
+    # Adiciona a entrada no crontab para executar o script no 20 dia de cada mês as 14 horas
+    (crontab -l ; echo "0 14 20 * * $(pwd)/crontab_ran_syslog.sh cronfish") | crontab -
 fi
 # se executar com [[$1 -eq cronfiss]]!!
 if [[ $1 == "cronfish" ]]; then
@@ -47,6 +47,7 @@ diretorio_principal=$(dirname "$0")
 
 # Obtém o ano atual do sistema
 ano_atual=$(date "+%Y")
+proximo_ano=$(date -d "+1 year" +%Y)
 
 # Arquivo para armazenar o ano atual
 arquivo_ano_atual="$diretorio_entrada/$ano_atual"
@@ -60,6 +61,16 @@ fi
 # Obtenha o mês atual
 mes_atual_numeral=$(date "+%m")
 
+# Obter o próximo mês
+proximo_mes_numeral=$(date -d "next month" +%m)
+proximo_mes_texto=$(date -d "next month" +%B)
+proximo_mes="$proximo_mes_numeral$proximo_mes_texto"
+
+# Se o proximo mes for janeiro, atualiza o ano atual para o próximo ano
+if [ $proximo_mes_texto = "janeiro" ]; then
+    ano_atual=$proximo_ano
+fi
+
 # Obtenha o mês atual
 mes_atual_texto=$(date +%B)
 
@@ -69,7 +80,8 @@ dia_atual=$(date +%d)
 #define o nome do arquivo log
 arquivo_log="log_mes.txt"
 
-arquivo_mes_atual="$diretorio_entrada/$ano_atual/$mes_atual_numeral$mes_atual_texto"
+#arquivo_mes_atual="$diretorio_entrada/$ano_atual/$mes_atual_numeral$mes_atual_texto"
+arquivo_mes_atual="$diretorio_entrada/$ano_atual/$proximo_mes"
 
 if [ ! -d "$arquivo_mes_atual" ]; then
     printf "pasta do Mês: [%s] criada com sucessso." "$mes_atual_numeral$mes_atual_texto"
