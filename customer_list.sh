@@ -13,6 +13,7 @@ declare -A cliente1=(
     ["mes_atual"]="$mes_atual_texto"
     ["ano"]="$ano_atual"
     ["dia_atual"]="$dia_atual"
+    ["proximo_mes"]="$proximo_mes_texto"
 )
 
 
@@ -28,4 +29,5 @@ declare -A cliente2=(
     ["mes_atual"]="$mes_atual_texto"
     ["ano"]="$ano_atual"
     ["dia_atual"]="$dia_atual"
+    ["proximo_mes"]="$proximo_mes_texto"
 )

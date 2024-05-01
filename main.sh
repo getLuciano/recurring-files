@@ -88,13 +88,13 @@ if [ ! -d "$arquivo_mes_atual" ]; then
     mkdir "$arquivo_mes_atual"
 fi
 
-nome_arquivo="fantasia-Cobrança-mensal-Vencimento-dia_vencimento-ano-mes_atual.odt"
+nome_arquivo="fantasia-Cobrança-mensal-Vencimento-dia_vencimento-proximo_mes-de-ano.odt"
 # Verifica se a pasta do diretorio de entrada existe
 arquivo_modelo_odt="$diretorio_entrada/$nome_arquivo"
 if [ ! -e "$arquivo_modelo_odt" ]; then
     printf "Arquivo Modelo: [%s] copiado com sucessso." "$nome_arquivo" 
     # Copia o arquivo modelo .odt para a pasta arquivos
-    cp .file-model/fantasia-Cobrança-mensal-Vencimento-dia_atual-ano-mes_atual.odt arquivos/
+    cp .file-model/fantasia-Cobrança-mensal-Vencimento-dia_vencimento-proximo_mes-de-ano.odt arquivos/
 fi
 
 if [ ! -e "$arquivo_modelo_odt" ]; then
